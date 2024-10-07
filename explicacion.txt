@@ -1,0 +1,132 @@
+
+https://www.youtube.com/watch?v=2jRYxuuWGFI&t=4302s  : 2:33:09
+
+
+
+1.  iniciando facil express proyect
+
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm init --y
+Wrote to C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back\package.json:
+
+{
+  "name": "back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+
+
+
+
+
+2. 
+
+configurando .ts
+
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm install typescript --save-dev
+
+
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> tsc --init
+    esto crea un file tsconfig.json
+
+> crea un folder > dist
+
+tsconfig.json -> 
+        "outDir": "./dist",  /* Specify an output folder for all emitted files. */   --- descomentar esto es para transpilar
+                                       todo el codigo .ts lo convierte a .js y lo guarda ahi 
+   
+
+> tsc : comando transpila todo 
+     lo puedes ejecutar en cualquier ruta desde el cmd siempre q estes en tu proyecto general
+
+
+> poner en la terminal pa transpilar de .ts a .js auto any cambio 
+     > tsc --watch 
+==================
+ comanos para levantar proyecto 
+ ojo: si ejecutas nodemon asi debe instalarlo de manera global
+
+   > nodemon .\dist\index.js  : mapea los cambios
+   > tsc --watch              : para generar el .ts auto 
+
+
+
+
+3. Estuctura 
+
+   src >  crea un folder si no esta 
+        > index.ts
+     
+
+
+
+
+
+
+
+
+4. intalando depedencias 
+
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm install express dotenv cors mysql
+
+instalar de forma local solo en el proyecto
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm install nodemon
+
+para express y .ts
+PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm i --save-dev @types/express
+
+  > instalando forma global nodemon y puedese ejcutar lo asi
+    npm install -g nodemon
+    PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> nodemon .\dist\index.js
+
+
+    > para los cors 
+    PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm i --save-dev @types/cors
+
+para la bd
+> PS C:\Users\jesus\Desktop\JESUS\ANGULAR\crud_ejercisio_3\back> npm i --save-dev @types/mysql
+
+
+
+
+
+5. 
+  base de datos creacion 
+ 
+ > crear la bd y tabla 
+    ver basedatos.png > imagen
+
+> si sale error en la bd 
+  ejecutar en el mysql workbench
+ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1977';
+ flush privileges;
+
+
+ > =========procedure stament 
+
+ ----llamando otbiene todo 
+ > form de crear x codigo 
+ create procedure get_personas()
+select * from persona ;
+call get_personas();
+
+--- obteniendo por id 
+> otra forma de crear x stored procedure del mysql 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getdataxid`(
+codigo int 
+)
+select * from persona where id =  codigo
+
+-----eliminando x id 
+> otra forma de crear x stored procedure del mysql 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deletexid`(
+codigo int 
+)
+delete from persona where id = codigo
