@@ -11,17 +11,16 @@ import connection from '../db/connections';
 
 // metodo obiente todo get 
 export const getPersonas = (req: Request, res: Response) => {
-    // regreso al cliente
-    // res.json({
-    //     msg:"getPersonas"
-    // })
+
 
     // regreso al front  sin sp 
     // connection.query('select * from persona',(err ,data)=>{
-    //     if(err) throw err;
+    //     if(err) throw err; //si hay error
         
+    //     // return front
     //     res.json(data)
     // })
+
 
     // con sp 
     connection.query('call get_personas()',(err ,data)=>{
@@ -42,17 +41,16 @@ export const getPersona = (req: Request, res: Response) => {
     const { id } = req.params;
 
 
-    // regreso al cliente
-    // res.json({
-    //     msg:"getPersona",
-    //     id: id
-    // })
 
     // regreso al front query sql sin sp 
     // connection.query('select * from persona where id =  ?' , id ,(err , data)=>{
-    //     if( err) throw err;
+    //     if( err) throw err; //si hay error
+    //     // return front
+    //     // devuelve en array x eso queremos el primero
     //     res.json(data[0])
     // } )
+
+
 
     // con sp 
     connection.query('call getdataxid(?)' , id ,(err , data)=>{
@@ -71,14 +69,12 @@ export const deletePersona = (req: Request, res: Response) => {
     // desectructurando
     const { id } = req.params;
 
-    // regreso al cliente
-    // res.json({
-    //     msg:"deletePersona",
-    //     id: id
-    // })
+
     // regreso al front query sin sp 
     // connection.query('delete from persona where id = ?' , id ,(err , data)=>{
-    //   if(err) throw err;
+    //   if(err) throw err; //si hay error
+    
+    //   //   return front
     //   res.status(200).json({
     //     msj:`la persona con ${id} eliminado correctamente`
     //   })
@@ -86,15 +82,16 @@ export const deletePersona = (req: Request, res: Response) => {
 
 
     // con sp 
-        connection.query('call deletexid(2)' , id ,(err , data)=>{
+      connection.query('call deletexid(?)' , id ,(err , data)=>{
       if(err) throw err;
       res.status(200).json({
         msj:`la persona con ${id} eliminado correctamente`
       })
     })
-
-
 }
+
+
+
 
 
 
@@ -103,7 +100,8 @@ export const deletePersona = (req: Request, res: Response) => {
 export const posPersona = (req: Request, res: Response) => {
         // parametros del cliente = en el routers
     // desectructurando
-    const {nombre , apellido , correo , tipoDocumento , documento , fechaNacimiento}= req.body;
+    const {body} = req; 
+    const {nombre , apellido , correo , tipoDocumento , documento , fechaNacimiento}= req.body; //para el sp
     
 
 
@@ -120,20 +118,22 @@ export const posPersona = (req: Request, res: Response) => {
 // })
 
 
-// con sp 
-var sql= `INSERT INTO persona (nombre ,apellido , correo , tipoDocumento , documento ,
- fechaNacimiento  ) values ( ? , ? , ? , ?, ?, ?)`;
 
+// // con sp 
+var sql= `call postPersona( ? , ? , ? , ?, ?, ?)`;
 connection.query(sql,[  nombre , apellido , correo , tipoDocumento,
     documento , fechaNacimiento ], (err , data )=>{
 
         // error 
         if(err) throw err;
+        
         // regreso al front 
         res.status(200).json({
             msg:`persona agrega correctamente`
         })
     })
+
+
 }
 
 
@@ -148,25 +148,38 @@ connection.query(sql,[  nombre , apellido , correo , tipoDocumento,
 export const putPersona = (req: Request, res: Response) => {
     // parametros del cliente = en el routers
     // desectructurando
-    const {body}= req;
+    const {body }= req;
     const {id}= req.params;
 
-// regreso al cliente
-    // res.json({
-    // msg:"postpersona",
-    // body: body ,
-    // id: id
-    // })
+
 
     //consutla sql 
-    connection.query('update persona set ? where id = ?',[body , id],(err , data)=>{
+    // connection.query('update persona set ? where id = ?',[body , id],(err , data)=>{
+    //     // si generar error
+    //     if(err) throw err;
+
+    //     // response cliente
+    //     res.status(200).json({
+    //         msg:`${body.nombre }actualizado correctamente`
+    //     })
+    // })
+
+
+
+    // con sp 
+
+    // desestructurando
+    const {nombre , apellido , correo , tipoDocumento , documento , fechaNacimiento } = body;
+    var sql= `call updatePersona( ?, ? , ? , ? , ?, ?, ?)`;
+
+    connection.query(sql,[id, nombre , apellido , correo , tipoDocumento,documento , fechaNacimiento],(err , data)=>{
 
         // si generar error
         if(err) throw err;
 
         // response cliente
         res.status(200).json({
-            msg:`${body.nombre }actualizado correctamente`
+            msg:`${body.nombre } actualizado correctamente`
         })
     })
 }

@@ -1,5 +1,5 @@
 
-https://www.youtube.com/watch?v=2jRYxuuWGFI&t=4302s  : 2:33:09
+https://www.youtube.com/watch?v=2jRYxuuWGFI&t=4302s  : 3:00:39
 
 
 
@@ -103,18 +103,29 @@ para la bd
  > crear la bd y tabla 
     ver basedatos.png > imagen
 
+
+ > tabla persona crear data en todo caso no haiga 
+   verificar  y relacionar los campos
+   1	> jesus >	huaman >	jesus@jesus >	2323232  >23232
+
 > si sale error en la bd 
   ejecutar en el mysql workbench
+
+  1 ejecutar esto
  ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1977';
+
+ 2 ejecutar esto
  flush privileges;
 
 
- > =========procedure stament 
+ > =========procedure stament SP
 
  ----llamando otbiene todo 
  > form de crear x codigo 
  create procedure get_personas()
 select * from persona ;
+
+ejecutando
 call get_personas();
 
 --- obteniendo por id 
@@ -124,9 +135,60 @@ codigo int
 )
 select * from persona where id =  codigo
 
+ejecutando
+call getdataxid(1);
+
 -----eliminando x id 
+
 > otra forma de crear x stored procedure del mysql 
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `deletexid`(
 codigo int 
 )
 delete from persona where id = codigo
+
+
+---post 
+
+> otra forma de crear x stored procedure del mysql  
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `postPersona`(
+ nombres NVARCHAR(50),
+ apellidos NVARCHAR(50) ,
+  addres NVARCHAR(50),
+ typeDocument NVARCHAR(50) ,
+ documentos int ,
+ fecDate date
+)
+INSERT INTO persona (nombre ,apellido , correo , tipoDocumento , documento ,
+ fechaNacimiento  ) values ( nombres , apellidos , addres , typeDocument, documentos, fecDate)
+
+ call postPersona('jesus' , 'huaman' ,'jesus@jesu', '378282' , 324322,'2020-12-10' );
+
+
+
+ ---update 
+
+> otra forma de crear x stored procedure del mysql  
+
+
+ CREATE DEFINER=`root`@`localhost` PROCEDURE `updatePersona`(
+  ids int ,
+ nombres NVARCHAR(50),
+ apellidos NVARCHAR(50) ,
+  addres NVARCHAR(50),
+ typeDocument NVARCHAR(50) ,
+ documentos int ,
+ fecDate date
+)
+UPDATE persona
+   SET nombre = nombres
+     , apellido = apellidos,
+     correo =addres ,
+     tipoDocumento = typeDocument ,
+     documento =documentos ,
+     fechaNacimiento =fecDate
+ WHERE id  = ids
+
+
+ call updatePersona( '2' ,'cibertec' , 'huaman' ,'jesus@jesu', '378282' , 324322,'2020-12-10' );
