@@ -61,9 +61,18 @@ tsconfig.json ->
 
 3. Estuctura 
 
-   src >  crea un folder si no esta 
-        > index.ts
-     
+ crea un folder o los files si no esta 
+   src > 
+      > controllers 
+        persona.controller.ts
+      > db   
+         connections.ts
+      > models 
+         server.ts 
+      > routes 
+        persona.routes.ts 
+    index.ts 
+    keys.ts         
 
 
 
@@ -192,3 +201,15 @@ UPDATE persona
 
 
  call updatePersona( '2' ,'cibertec' , 'huaman' ,'jesus@jesu', '378282' , 324322,'2020-12-10' );
+
+
+
+
+
+
+ 6. git 
+    git > no subas el folder dist y node_modules
+   omitelos en .gitignore    >
+     
+     node_modules
+     dist/

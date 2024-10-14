@@ -24,9 +24,19 @@ export const getPersonas = (req: Request, res: Response) => {
 
     // con sp 
     connection.query('call get_personas()',(err ,data)=>{
+
+        // si hay error
         if(err) throw err;
         
-        res.json(data)
+        // que exista data y haiga data 
+        if(data && data.length > 0){
+            // cuando son sp se envia el 1 array su posicion 
+            res.json(data[0])
+        }else{
+            // si no hay enviamos vacio
+            res.json([])
+        }
+
     })
 }
 

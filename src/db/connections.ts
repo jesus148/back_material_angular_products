@@ -1,5 +1,5 @@
 import mysql from 'mysql';
-import keys from '../keys'; //exportando
+import keys from '../keys'; //importando
 
 
 // para la conexion en mysql , aqui si se configura la conexion
